@@ -12,8 +12,8 @@ int main()
     cout << GREEN;
     int randomNumberDistribution[20]{};
     float deltaFromIdealValues[20]{};
-    srand(time(NULL));
-    cout << "how many random numbers?";
+    srand(time(nullptr));
+    cout << "How many random numbers? ";
     int iterations = 0;
     cin >> iterations;
 
@@ -23,26 +23,26 @@ int main()
         randomNumberDistribution[randomInt - 1]++;
     }
     
-    cout <<endl<< "generated " << iterations << " random numbers"<<endl;
+    cout <<endl<< "Generated " << iterations << " random numbers."<<endl << endl;
 
     const float expectedPercentage = 5;
-    cout << "expected percentage:" << expectedPercentage <<"%"<<endl;
+    cout << "Expected percentage: " << expectedPercentage <<"%"<<endl;
     float maxDelta = 0, minDelta = 100, sumDelta = 0;;
-    cout << "deltas (absolute values): " << endl;
+    cout << "Deltas (absolute values): " << endl;
     for (int i = 0;i < sizeof(randomNumberDistribution) / sizeof(int);i++) {
-        deltaFromIdealValues[i] = abs((100 * randomNumberDistribution[i] / (float)iterations) - expectedPercentage);
+        deltaFromIdealValues[i] = abs((100 * randomNumberDistribution[i] / static_cast<float>(iterations)) - expectedPercentage);
         cout << deltaFromIdealValues[i] << " ";
         maxDelta = deltaFromIdealValues[i] > maxDelta ? deltaFromIdealValues[i] : maxDelta;
         minDelta = deltaFromIdealValues[i] < minDelta ? deltaFromIdealValues[i] : minDelta;
         sumDelta += deltaFromIdealValues[i];
     }
-    cout <<endl<< "max delta: " << maxDelta << endl;
-    cout << "min delta: " << minDelta << endl;
-    cout << "sum of all deltas: " << sumDelta << endl;
-    cout << "average delta: " << sumDelta/20.0f << endl;
+    cout <<endl<< "Max delta: " << maxDelta << endl;
+    cout << "Min delta: " << minDelta << endl;
+    cout << "Sum of all deltas: " << sumDelta << endl;
+    cout << "Average delta: " << sumDelta/20.0f << endl << endl;
 
     for (int i = 0;i < sizeof(randomNumberDistribution)/sizeof(int);i++) {
-        cout << "Number " << i+1<<": "<< randomNumberDistribution[i]<< " times ("<< 100*randomNumberDistribution[i]/ (float)iterations <<"%)"<< endl;
+        cout << "Number " << i+1<<": "<< randomNumberDistribution[i]<< " times ("<< 100*randomNumberDistribution[i]/ static_cast<float>(iterations) <<"%)"<< endl;
     }
 }
 
@@ -55,7 +55,7 @@ maybe, show the average, absolute discrepancy off the expected value
 Number 2: 189 times (4.975%)
 Number 3: 191 times (5.025%)
 ...
-Maximum Offet: Number 4 (0.004%)
-Minimum Offet: Number 7 (0.0%)
-Average Offet: 0.002%
+Maximum Offset: Number 4 (0.004%)
+Minimum Offset: Number 7 (0.0%)
+Average Offset: 0.002%
 */
