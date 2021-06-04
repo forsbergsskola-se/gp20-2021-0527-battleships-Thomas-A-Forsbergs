@@ -17,12 +17,12 @@ int fibRecursive(int n)
 
 int fibSmallSpace(int n)
 {
-    int a = 0, b = 1, c, i;
+    int a = 0, b = 1;
     if (n == 0)
         return a;
-    for (i = 2; i <= n; i++)
+    for (int i = 2; i <= n; i++)
     {
-        c = a + b;
+        int c = a + b;
         a = b;
         b = c;
     }
@@ -35,15 +35,14 @@ int fibStorage(int n)
     // Fibonacci numbers.
     // 1 extra to handle
     // case, n = 0
-    std::vector<int> fibVector(n + 2);
-    int i;
+    vector<int> fibVector(n + 2);
 
     // 0th and 1st number of the
     // series are 0 and 1
     fibVector[0] = 0;
     fibVector[1] = 1;
 
-    for (i = 2; i <= n; i++)
+    for (int i = 2; i <= n; i++)
     {
         //Add the previous 2 numbers
         // in the series and store it
@@ -56,30 +55,30 @@ int fibStorage(int n)
 int main()
 {
     int n;
-    cout << "enter #fibonacci: ";
+    cout << "Enter #fibonacci: ";
     cin >> n;
     auto start = high_resolution_clock::now();
     auto fibNumber = fibRecursive(n);
 
     auto stop = high_resolution_clock::now();
-    milliseconds duration = duration_cast<milliseconds>(stop - start);
-    cout << "Found " << fibNumber << " in " << duration.count() << " milliseconds, using recursion." << endl;
+    auto durationMilli = duration_cast<milliseconds>(stop - start);
+    cout << "Found " << fibNumber << " in " << durationMilli.count() << " milliseconds, using recursion." << endl;
 
     fibNumber = 0;
 
     start = high_resolution_clock::now();
     fibNumber = fibStorage(n);
     stop = high_resolution_clock::now();
-    nanoseconds durationns = duration_cast<nanoseconds>(stop - start);
-    cout << "Found " << fibNumber << " in " << durationns.count() << " nanoseconds, using an array to store all old numbers." << endl;
+    auto durationNano = duration_cast<nanoseconds>(stop - start);
+    cout << "Found " << fibNumber << " in " << durationNano.count() << " nanoseconds, using an array to store all old numbers." << endl;
 
     fibNumber = 0;
 
     start = high_resolution_clock::now();
     fibNumber = fibSmallSpace(n);
     stop = high_resolution_clock::now();
-    durationns = duration_cast<nanoseconds>(stop - start);
-    cout << "Found " << fibNumber << " in " << durationns.count() << " nanoseconds, storing the two last numbers in variables." << endl;
+    durationNano = duration_cast<nanoseconds>(stop - start);
+    cout << "Found " << fibNumber << " in " << durationNano.count() << " nanoseconds, storing the two last numbers in variables." << endl;
 
     getchar();
     return 0;
