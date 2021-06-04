@@ -1,20 +1,61 @@
-// RandomNumbers.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
+/*
+ * Copied from Joel Ring.
+ */
 
 #include <iostream>
+using namespace std;
+
+constexpr auto GREEN = "\033[32m";
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    cout << GREEN;
+    int randomNumberDistribution[20]{};
+    float deltaFromIdealValues[20]{};
+    srand(time(NULL));
+    cout << "how many random numbers?";
+    int iterations = 0;
+    cin >> iterations;
+
+    for (int i = 0; i < iterations; i++) {
+
+        auto randomInt = rand() % 20 + 1;
+        randomNumberDistribution[randomInt - 1]++;
+    }
+    
+    cout <<endl<< "generated " << iterations << " random numbers"<<endl;
+
+    const float expectedPercentage = 5;
+    cout << "expected percentage:" << expectedPercentage <<"%"<<endl;
+    float maxDelta = 0, minDelta = 100, sumDelta = 0;;
+    cout << "deltas (absolute values): " << endl;
+    for (int i = 0;i < sizeof(randomNumberDistribution) / sizeof(int);i++) {
+        deltaFromIdealValues[i] = abs((100 * randomNumberDistribution[i] / (float)iterations) - expectedPercentage);
+        cout << deltaFromIdealValues[i] << " ";
+        maxDelta = deltaFromIdealValues[i] > maxDelta ? deltaFromIdealValues[i] : maxDelta;
+        minDelta = deltaFromIdealValues[i] < minDelta ? deltaFromIdealValues[i] : minDelta;
+        sumDelta += deltaFromIdealValues[i];
+    }
+    cout <<endl<< "max delta: " << maxDelta << endl;
+    cout << "min delta: " << minDelta << endl;
+    cout << "sum of all deltas: " << sumDelta << endl;
+    cout << "average delta: " << sumDelta/20.0f << endl;
+
+    for (int i = 0;i < sizeof(randomNumberDistribution)/sizeof(int);i++) {
+        cout << "Number " << i+1<<": "<< randomNumberDistribution[i]<< " times ("<< 100*randomNumberDistribution[i]/ (float)iterations <<"%)"<< endl;
+    }
 }
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
+/*
+Create a large number of random numbers between 1 and 20!
+Count how often every number appears
+Compare this to the ideal distribution
+(i.e. display probability of every number or something like that)
+maybe, show the average, absolute discrepancy off the expected value
+Number 2: 189 times (4.975%)
+Number 3: 191 times (5.025%)
+...
+Maximum Offet: Number 4 (0.004%)
+Minimum Offet: Number 7 (0.0%)
+Average Offet: 0.002%
+*/
